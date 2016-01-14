@@ -34,14 +34,14 @@ def execCmd(cmd)
       raw = pipe.read(1000)
       if raw.nil?
         "-- empty --"
-      elsif !pipe.eof? || raw.split("\n").size > 20
+      elsif !pipe.eof? || raw.split("\n").size > 21
         raw + "\n-- too long --"
       else
         raw
       end
     }
   rescue
-    $!
+    $!.to_s
   end
 end
 
@@ -56,7 +56,7 @@ client.on :message do |data|
     rawText = CGI.unescapeHTML(text)
     Thread.new do
       puts "<#{name}> #{rawText}"
-      if m = rawText.match(/^(.*)/)
+      if m = rawText.match(/^\$(.*)/)
         cmd = m[1]
         result = execCmd(cmd)
         postTo "[#{name}] $ #{cmd}\n#{result}", channelID

@@ -32,12 +32,16 @@ def execCmd(cmd)
   begin
     IO.popen(cmd, 2 => [:child, 1]){|pipe|
       raw = pipe.read(1000)
-      if !pipe.eof? || raw.split("\n").size > 20
+      if raw.nil?
+        "-- empty --"
+      elsif !pipe.eof? || raw.split("\n").size > 20
         raw + "\n-- too long --"
+      else
+        raw
       end
     }
   rescue
-    return $!
+    $!
   end
 end
 

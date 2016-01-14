@@ -31,12 +31,14 @@ end
 
 def execCmd(cmd)
   begin
-    Open3.popen2e(cmd){|_, stdout|
+    Open3.popen2e(cmd+"\n"){|_, stdout| # "\n" makes always cmd interpreted in shell
       raw = stdout.read(1000)
       if raw.nil?
         "-- empty --"
-      elsif !stdout.eof? || raw.split("\n").size > 20
-        raw + "\n-- too long --"
+      elsif !stdout.eof?
+        raw + "\n-- too large --"
+      elsif (sp = raw.split("\n").size) > 20
+        sp[0..20] + "\n-- too long --"
       else
         raw
       end

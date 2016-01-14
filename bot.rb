@@ -35,8 +35,8 @@ def execCmd(cmd)
       raw = stdout.read(1000)
       if raw.nil?
         "-- empty --"
-      elsif (sp = raw.split("\n")).size > 20
-        sp[0..20] + "\n-- too long --"
+      elsif raw.split("\n").size > 20
+        raw.split("\n")[0..20].join("\n") + "\n-- too long --"
       elsif !stdout.eof?
         raw + "\n-- too large --"
       else

@@ -5,4 +5,5 @@ ADD Gemfile ./
 ADD bot.rb ./
 ADD start.sh ./
 
+RUN chmod +x start.sh
 RUN bundle install

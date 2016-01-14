@@ -3,6 +3,7 @@
 require "slack"
 require "cgi"
 require "pp"
+require "open3"
 
 BOT_NAME = "shell"
 channelID = 'C04NR5FEY' # #shell
@@ -30,20 +31,21 @@ end
 
 def execCmd(cmd)
   begin
-    IO.popen(cmd, 2 => [:child, 1]){|pipe|
-      raw = pipe.read(1000)
+    Open3.popen2e(cmd){|_, stdout|
+      raw = stdout.read(1000)
       if raw.nil?
         "-- empty --"
-      elsif !pipe.eof? || raw.split("\n").size > 21
+      elsif !stdout.eof? || raw.split("\n").size > 20
         raw + "\n-- too long --"
       else
         raw
       end
     }
   rescue
-    $!.to_s
+    "-- ERROR : #{$!.to_s} --"
   end
 end
+
 
 client.on :hello do
   puts "Successfully connected!"

@@ -2,7 +2,7 @@ FROM ruby:1.9
 RUN mkdir -p /tmp/shell
 WORKDIR /tmp/shell
 ADD Gemfile ./
-ADD hoge.rb ./
-ADD id2name ./
+ADD bot.rb ./
+ADD start.sh ./
 
 RUN bundle install

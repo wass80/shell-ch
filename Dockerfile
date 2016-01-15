@@ -1,9 +1,11 @@
-FROM ruby:1.9
+FROM ruby:2.3
 RUN mkdir -p /tmp/shell
 WORKDIR /tmp/shell
-ADD Gemfile ./
-ADD bot.rb ./
-ADD start.sh ./
 
-RUN chmod +x start.sh
+ADD Gemfile ./
 RUN bundle install
+
+ADD start.sh ./
+RUN chmod +x start.sh
+:
+ADD bot.rb ./

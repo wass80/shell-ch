@@ -7,5 +7,5 @@ RUN bundle install
 
 ADD start.sh ./
 RUN chmod +x start.sh
-:
+
 ADD bot.rb ./

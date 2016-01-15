@@ -6,9 +6,10 @@ require "pp"
 require "open3"
 
 BOT_NAME = "shell"
+ICON_EMOJI = ":shell2:"
 channelID = 'C04NR5FEY' # #shell
-
 Slack.configure {|config| config.token = ENV["TOKEN"] }
+
 p Slack.auth_test
 client = Slack.realtime
 
@@ -19,7 +20,7 @@ def id2user(id)
 end
 
 def postTo(text, chan)
-  Slack.chat_postMessage text: text, channel: chan, username:BOT_NAME
+  Slack.chat_postMessage text: text, channel: chan, username:BOT_NAME, icon_emoji: ICON_EMOJI
 end
 
 def validMsg(data, chan)

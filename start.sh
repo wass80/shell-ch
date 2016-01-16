@@ -1,4 +1,4 @@
 #!/bin/sh
 
-export LANG=C.UTF-8
+setenv LANG C.UTF-8
 bundle exec ruby bot.rb

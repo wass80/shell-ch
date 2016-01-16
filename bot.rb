@@ -33,7 +33,7 @@ end
 def execCmd(cmd)
   begin
     Open3.popen2e(cmd+"\n"){|_, stdout| # "\n" makes always cmd interpreted in shell
-      raw = stdout.read(1000)
+      raw = stdout.read(1000).force_encoding("UTF-8")
       if raw.nil?
         "-- empty --"
       elsif raw.split("\n").size > 20

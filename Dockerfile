@@ -9,3 +9,5 @@ ADD start.sh ./
 RUN chmod +x start.sh
 
 ADD bot.rb ./
+
+ENV LANG C.UTF-8

@@ -30,9 +30,13 @@ def validMsg(data, chan)
   end
 end
 
-def execCmd(cmd)
+def execCmd(cmd, inText = nil)
   begin
-    Open3.popen2e(cmd+"\n"){|_, stdout| # "\n" makes always cmd interpreted in shell
+    Open3.popen2e(cmd+"\n"){|stdin, stdout| # "\n" makes always cmd interpreted in shell
+      unless stdin.nil?
+        stdin.puts inText
+        stdin.close
+      end
       raw = stdout.read(1000)&.force_encoding("UTF-8")
       if raw.nil?
         "-- empty --"
@@ -49,7 +53,6 @@ def execCmd(cmd)
   end
 end
 
-
 client.on :hello do
   puts "Successfully connected!"
   postTo "シェルたんは新しい命を手に入れた!", channelID
@@ -65,6 +68,10 @@ client.on :message do |data|
         cmd = m[1]
         result = execCmd(cmd)
         postTo "[#{name}] $ #{cmd}\n#{result}", channelID
+      elsif m = rawText.match(/^\#(.*)/)
+        cmd = m[1]
+        result = execCmd(cmd)
+        postTo "[#{name}] # #{cmd}\n#{result}", channelID
       end
     end
   end

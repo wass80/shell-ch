@@ -1,4 +1,7 @@
 FROM ruby:2.3
+
+RUN apt-get update -y && apt-get install -y zsh
+
 RUN mkdir -p /tmp/shell
 WORKDIR /tmp/shell
 

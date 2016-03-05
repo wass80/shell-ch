@@ -67,11 +67,11 @@ client.on :message do |data|
       if m = rawText.match(/^\$(.*)/)
         cmd = m[1]
         result = execCmd(cmd)
-        postTo "[#{name}] $ #{cmd}\n#{result}", channelID
+        postTo "[#{name}] $#{cmd}\n#{result}", channelID
       elsif m = rawText.match(/^\#(.*)/)
         cmd = m[1]
-        result = execCmd(cmd)
-        postTo "[#{name}] # #{cmd}\n#{result}", channelID
+        result = execCmd("zsh", cmd)
+        postTo "[#{name}] ##{cmd}\n#{result}", channelID
       end
     end
   end
